@@ -66,6 +66,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbrir_Archivo.menuAction())
         self.menubar.addAction(self.menuEditar.menuAction())
 
+        self.nsda
         self.retranslateUi(MainWindow)
         self.actionCerrar.triggered.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)

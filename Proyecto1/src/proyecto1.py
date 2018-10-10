@@ -259,6 +259,7 @@ class Ui_MainWindow(object):
 #                    self.reglasBeforeArrow      #["βx", "xβ" , "x"]  
 
     #HACER QUE X = ABCDEFGHI...
+    #--------------------READY TO RUMBLEEEEEEEEE----------------------
             self.hileraPorLetras = [word[0] for word in self.hileraUsuario]
             paso = 1
             quedoEn = 0
@@ -276,6 +277,8 @@ class Ui_MainWindow(object):
                                 quedoEn = n
                                 paso = 2
                                 self.reglasQueUsa.append(separado[k])
+                                
+   #------------------------------------------------------------------------------------
 #                hileraPorLetras = (hilera.splitPorLetras) // [a,b,c,β,d]
 #                //beforeArrow = ["βx", "xβ" , "x"]
 #                paso=1

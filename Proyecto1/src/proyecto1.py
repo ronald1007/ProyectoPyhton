@@ -7,7 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -71,10 +72,19 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbrir_Archivo.menuAction())
         self.menubar.addAction(self.menuEditar.menuAction())
         
+        
         self.botonStart.clicked.connect(self.leerLineaPorLinea) #********************************************
+        
+        #self.actionAbrir.clicked.connect(self.openFileNameDialog) #********************************************
+        
+        #self.openFileNameDialog()
+        
         
         self.retranslateUi(MainWindow)
         self.actionCerrar.triggered.connect(MainWindow.close)
+        self.actionAbrir.triggered.connect(self.openFileNameDialog)
+        #self.actionAbrir.triggered.connect(self.openFileNamesDialog)
+        #self.actionAbrir.triggered.connect(self.saveFileDialog)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -90,6 +100,54 @@ class Ui_MainWindow(object):
         self.actionCerrar.setText(_translate("MainWindow", "Cerrar"))
         self.actionStart.setText(_translate("MainWindow", "Play"))
         self.actionDebug.setText(_translate("MainWindow", "Debug"))
+    
+#    def openFileNameDialog(self):    
+#        options = QFileDialog.Options()
+#        options |= QFileDialog.DontUseNativeDialog
+#        fileName, _ = QFileDialog.getOpenFileName(self,QFileDialog.getOpenFileName(), "","All Files (*);;Python Files (*.py)", options=options)
+#        if fileName:
+#            print(fileName)
+        
+#    def openFileNameDialog(self):
+#        print("adjuntando")
+#        options = QFileDialog.Options()
+#        options |= QFileDialog.DontUseNativeDialog
+#        fileName, _ = QFileDialog.getOpenFileName(self,QFileDialog.getOpenFileName(), "","Text Files (*.txt)", options=options)
+#        if fileName:
+#           print(fileName)
+        
+    def openFileNameDialog(self):    
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(None,"QFileDialog.getOpenFileNames()", " ","All Files (*)", options=options)
+        #if fileName:
+        #    print(fileName)
+        
+        if fileName:
+            f = open(fileName, 'r')
+
+            with f:
+                data = f.read()
+                self.campoIngresa.setText(data)
+                f.close()
+        
+    #dialog.getOpenFileName(None, "Window name", "", "CSV files (*.csv)")
+    
+    def openFileNamesDialog(self):    
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        files, _ = QFileDialog.getOpenFileNames(self,"QFileDialog.getOpenFileNames()", "","All Files (*);;Python Files (*.py)", options=options)
+        if files:
+            print(files)
+ 
+    def saveFileDialog(self):    
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()","","All Files (*);;Text Files (*.txt)", options=options)
+        if fileName:
+            print(fileName)
+  
+    
     
     def leerLineaPorLinea(self):
             lines = (self.campoIngresa.toPlainText()).split('\n')
@@ -209,6 +267,8 @@ if __name__ == "__main__":
     ui= Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+    
+      
     sys.exit(app.exec_())
     
     

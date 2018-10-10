@@ -7,7 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -71,10 +72,19 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAbrir_Archivo.menuAction())
         self.menubar.addAction(self.menuEditar.menuAction())
         
+        
         self.botonStart.clicked.connect(self.leerLineaPorLinea) #********************************************
+        
+        #self.actionAbrir.clicked.connect(self.openFileNameDialog) #********************************************
+        
+        #self.openFileNameDialog()
+        
         
         self.retranslateUi(MainWindow)
         self.actionCerrar.triggered.connect(MainWindow.close)
+        self.actionAbrir.triggered.connect(self.openFileNameDialog)
+        #self.actionAbrir.triggered.connect(self.openFileNamesDialog)
+        #self.actionAbrir.triggered.connect(self.saveFileDialog)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -91,6 +101,54 @@ class Ui_MainWindow(object):
         self.actionStart.setText(_translate("MainWindow", "Play"))
         self.actionDebug.setText(_translate("MainWindow", "Debug"))
     
+#    def openFileNameDialog(self):    
+#        options = QFileDialog.Options()
+#        options |= QFileDialog.DontUseNativeDialog
+#        fileName, _ = QFileDialog.getOpenFileName(self,QFileDialog.getOpenFileName(), "","All Files (*);;Python Files (*.py)", options=options)
+#        if fileName:
+#            print(fileName)
+        
+#    def openFileNameDialog(self):
+#        print("adjuntando")
+#        options = QFileDialog.Options()
+#        options |= QFileDialog.DontUseNativeDialog
+#        fileName, _ = QFileDialog.getOpenFileName(self,QFileDialog.getOpenFileName(), "","Text Files (*.txt)", options=options)
+#        if fileName:
+#           print(fileName)
+        
+    def openFileNameDialog(self):    
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(None,"QFileDialog.getOpenFileNames()", " ","All Files (*)", options=options)
+        #if fileName:
+        #    print(fileName)
+        
+        if fileName:
+            f = open(fileName, 'r')
+
+            with f:
+                data = f.read()
+                self.campoIngresa.setText(data)
+                f.close()
+        
+    #dialog.getOpenFileName(None, "Window name", "", "CSV files (*.csv)")
+    
+    def openFileNamesDialog(self):    
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        files, _ = QFileDialog.getOpenFileNames(self,"QFileDialog.getOpenFileNames()", "","All Files (*);;Python Files (*.py)", options=options)
+        if files:
+            print(files)
+ 
+    def saveFileDialog(self):    
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()","","All Files (*);;Text Files (*.txt)", options=options)
+        if fileName:
+            print(fileName)
+  
+    
+    
     def leerLineaPorLinea(self):
             lines = (self.campoIngresa.toPlainText()).split('\n')
             
@@ -100,48 +158,124 @@ class Ui_MainWindow(object):
             self.symbols = []
             self.var = []
             self.markers = []
+            
             self.simbolsSepadaras = []
             self.reglasSeparadasPorFlecha = []
             self.reglasBeforeArrow = []
             self.reglasAfterArrow = []
+            
+            self.hileraUsuario = [] #ir guardando en cada posicion la hilera nueva que se crea!
+            self.reglasQueUsa = []
+            
             for i in range(0, len(lines)):
-                letras = [word[0] for word in lines[i]]
-                if letras[0] == "%": 
-                                    self.comentarios.append(lines[i])
-                elif letras[0] == "#": 
-                                    primera = (lines[i].split(" "))
-                                    #print(primera[0])
-                                    if primera[0] == "#symbols":
-                                        self.symbols = primera[1]
-                                        print(self.symbols)
-                                    if primera[0] == "#vars":
-                                        self.var = primera[1]
-                                        print(self.var)
-                                    if primera[0] == "#markers":
-                                        self.markers = primera[1]
-                                        print(self.markers)
-                                        #print(self.symbols) #primera[0] = #simbol   primera[1] = abcdefg
-                                    #VERIFICAR SI ES UN SIMBOLO O MARKERS Y GUARDARLA EN UNA NUEVA VARIABLE "GLOBAL
-                else:
-                    if '>' in letras :
-                        #print(lines[i]) #letras
-                        #replace
-                        sinEspacios = lines[i].replace(" ", "")
-                        self.reglasSeparadasPorFlecha = (sinEspacios).split('->')
-                        self.reglasBeforeArrow = self.reglasSeparadasPorFlecha[0] 
-                        self.reglasAfterArrow = self.reglasSeparadasPorFlecha[1]
-                        print(self.reglasBeforeArrow)
-                    if '→' in letras :  
-                        sinEspacios2 = lines[i].replace(" ", "")
-                        self.reglasSeparadasPorFlecha = (sinEspacios2).split('→')
-                        self.reglasBeforeArrow = self.reglasSeparadasPorFlecha[0] 
-                        self.reglasAfterArrow = self.reglasSeparadasPorFlecha[1]
-                        print(self.reglasBeforeArrow)
+                if lines[i]: #Si no es vacio el campo     if pone un enter en el texto
+                    letras = [word[0] for word in lines[i]]
+                    
+                    if letras[0] == "%": 
+                                        self.comentarios.append(lines[i])
+                    elif letras[0] == "#": 
+                                        primera = (lines[i].split(" "))
+                                        #print(primera[0])
+                                        if primera[0] == "#symbols":
+                                            self.symbols = primera[1]
+                                            #print(self.symbols)
+                                        if primera[0] == "#vars":
+                                            self.var = primera[1]
+                                            #print(self.var[0])
+                                        if primera[0] == "#markers":
+                                            self.markers = primera[1]
+                                            #print(self.markers)
+                                            #print(self.symbols) #primera[0] = #simbol   primera[1] = abcdefg
+                                        #VERIFICAR SI ES UN SIMBOLO O MARKERS Y GUARDARLA EN UNA NUEVA VARIABLE "GLOBAL
+
+                    else:
+                        if '>' in letras :
+                            banderaReglasConSentido = 0
+                            sinEspacios = lines[i].replace(" ", "")
+                            self.reglasSeparadasPorFlecha = (sinEspacios).split('->')
+                            verificaBA = self.reglasSeparadasPorFlecha[0]
+
+                            for varRegl in range(0 , len(verificaBA)):      #verificaVarsBA = reglas antes de la flecha
+
+                                for v in range(0 , len(self.var)):              #total de vars, ejm: abdcefgh
+                                    if verificaBA[varRegl] == self.var[v]:      #recorre todas las vars y verifica si esta ahi
+                                        banderaReglasConSentido = banderaReglasConSentido+5
+
+                                    else:
+                                        banderaReglasConSentido = banderaReglasConSentido+0
+
+                                for s in range(0 , len(self.markers)):           #total de markers, ejm: BG
+                                    if verificaBA[varRegl] == self.markers[s]:   #recorre todas las markers y verifica si esta ahi
+                                        banderaReglasConSentido = banderaReglasConSentido+5
+
+                                    else:
+                                        banderaReglasConSentido = banderaReglasConSentido+0
+
+                            if banderaReglasConSentido > 0:
+                                self.reglasBeforeArrow.append(self.reglasSeparadasPorFlecha[0])
+                                self.reglasAfterArrow.append(self.reglasSeparadasPorFlecha[1])
+                            else:
+                                self.reglasBeforeArrow.append("INCORRECTO")
+                                self.reglasAfterArrow.append("INCORRECTO")
+                            #print(self.reglasBeforeArrow)
+                        if '→' in letras :  
+                            banderaReglasConSentido = 0
+                            sinEspacios2 = lines[i].replace(" ", "")
+                            self.reglasSeparadasPorFlecha = (sinEspacios2).split('→')
+                            verificaBA = self.reglasSeparadasPorFlecha[0]
+                            
+                            for varRegl in range(0 , len(verificaBA)):      #verificaVarsBA = reglas antes de la flecha
+
+                                for v in range(0 , len(self.var)):              #total de vars, ejm: abdcefgh
+                                    if verificaBA[varRegl] == self.var[v]:      #recorre todas las vars y verifica si esta ahi
+                                        banderaReglasConSentido = banderaReglasConSentido+5
+
+                                    else:
+                                        banderaReglasConSentido = banderaReglasConSentido+0
+
+                                for s in range(0 , len(self.markers)):           #total de markers, ejm: BG
+                                    if verificaBA[varRegl] == self.markers[s]:   #recorre todas las markers y verifica si esta ahi
+                                        banderaReglasConSentido = banderaReglasConSentido+5
+
+                                    else:
+                                        banderaReglasConSentido = banderaReglasConSentido+0
+
+                            if banderaReglasConSentido > 0:
+                                self.reglasBeforeArrow.append(self.reglasSeparadasPorFlecha[0])
+                                self.reglasAfterArrow.append(self.reglasSeparadasPorFlecha[1])
+                            else:
+                                self.reglasBeforeArrow.append("INCORRECTO")
+                                self.reglasAfterArrow.append("INCORRECTO")
+                            #self.reglasBeforeArrow.append(self.reglasSeparadasPorFlecha[0])
+                            #self.reglasAfterArrow.append(self.reglasSeparadasPorFlecha[1])
+                            #print(self.reglasBeforeArrow)
+                        else:
+                            self.hileraUsuario = lines[i] # puede ir en el if de arriba, de la flecha
+            print(self.reglasBeforeArrow ,"->", self.reglasAfterArrow , "hilera del Usuario:",self.hileraUsuario)    
+            #fin del for que guarda todas variables
+    #-------------------------------------------------------------------------------------------
 #                    self.hileraPorLetras = letras #[a,b,c,d]
 #                    print(self.hileraPorLetras)   
-#                    self.reglasBeforeArrow      #["βx", "xβ" , "x"]       
-                                    
-            
+#                    self.reglasBeforeArrow      #["βx", "xβ" , "x"]  
+
+    #HACER QUE X = ABCDEFGHI...
+            self.hileraPorLetras = [word[0] for word in self.hileraUsuario]
+            paso = 1
+            quedoEn = 0
+            for i in range(0, len(self.reglasBeforeArrow)):
+                separado = [word[0] for word in self.reglasBeforeArrow[i]]
+                for k in range(0, len(separado)):
+                    if paso == 2:
+                        for nuevo in range(quedoEn, len(self.hileraPorLetras)):
+                            if self.hileraPorLetras[nuevo] == separado[k]:
+                                quedoEn = nuevo
+                                self.reglasQueUsa.append(separado[k])
+                    if paso == 1:   
+                        for n in range(0, len(self.hileraPorLetras)):
+                            if self.hileraPorLetras[n] == separado[k]:
+                                quedoEn = n
+                                paso = 2
+                                self.reglasQueUsa.append(separado[k])
 #                hileraPorLetras = (hilera.splitPorLetras) // [a,b,c,β,d]
 #                //beforeArrow = ["βx", "xβ" , "x"]
 #                paso=1
@@ -172,33 +306,8 @@ class Ui_MainWindow(object):
 #                elif notaAlumno > 0 and notaAlumno<8:     print("Bien") 
 #                elif notaAlumno > 0 and notaAlumno<9:     print("Notable") 
 #                else:     print("Sobresaliente")
-            
-#            for i in range( lines[0] ):
-#                if(lines[0])
-#            print("gola")
-#            doc = self.campoIngresa.document()
-#            block = doc.begin()
-#            lines = [ block.text() ]
-#            for i in range( 1, doc.blockCount() ):
-#                block = block.next()
-#                lines.append( block.text() 
                 
-            
-            
-	# data = campoIngresa.toPlainText()
-	# print (data)
-#    print('Selfsfd')
-#    self.campoSalida.setText("Pla")
-#    print('asd')
-#    textboxValue = self.campoIngresa.toPlainText()
-#    print('1122')
-#    for pid in psutil.pids():  # Controlla se il processo è attivo
-#        listapid = psutil.Process(pid)
-#        if listapid.name() == textboxValue:
-#            print('Processo trovato')
-#    self.campoIngresa.clear()
-#    self.campoIngresa.textCursor().insertHtml('normal text')    
-  
+   
         
         
 
@@ -209,4 +318,9 @@ if __name__ == "__main__":
     ui= Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+    
+      
     sys.exit(app.exec_())
+    
+    
+    

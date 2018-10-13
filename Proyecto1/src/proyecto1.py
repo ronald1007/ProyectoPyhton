@@ -288,31 +288,36 @@ class Ui_MainWindow(object):
                             self.hileraUsuario = lines[i] # puede ir en el if de arriba, de la flecha
             print(self.reglasBeforeArrow ,"->", self.reglasAfterArrow , "hilera del Usuario:",self.hileraUsuario)    
             #fin del for que guarda todas variables
-    #-------------------------------------------------------------------------------------------
-#                    self.hileraPorLetras = letras #[a,b,c,d]
-#                    print(self.hileraPorLetras)   
-#                    self.reglasBeforeArrow      #["βx", "xβ" , "x"]  
-
-    #HACER QUE X = ABCDEFGHI...
+    #------------------------------------------------------------------------------------------------------------------
     #--------------------READY TO RUMBLEEEEEEEEE,  FALTA VERIFICAR IF VARIABLES SON SIMBOLOS, x=a----------------------
-            self.hileraPorLetras = [word[0] for word in self.hileraUsuario]#abcd = 
-            paso = 1
-            quedoEn = 0
-            reglasUso = []
-            letraAGuardar = []
-            pos = 0;
+#            self.hileraPorLetras = [word[0] for word in self.hileraUsuario]#abcd = 
+#            paso = 1
+#            quedoEn = 0
+#            reglasUso = []
+#            letraAGuardar = []
+#            pos = 0;
+        #for gigante hasta el infito , hasta el terminal
             for i in range(0, len(self.reglasBeforeArrow)): #xBx
+                self.hileraPorLetras = [word[0] for word in self.hileraUsuario]#abcd = 
+                paso = 1
+                quedoEn = 0
+                reglasUso = []
+                letraAGuardar = []
+                pos = 0;
                 print("Reglas antrs flecha Tofas: ",self.reglasBeforeArrow)
                 separado = [word[0] for word in self.reglasBeforeArrow[i]]
                 print("Reglas de 0 separadas",separado)
                 for k in range(0, len(separado)): #[x,B] , vars wxyz->abcdefg...
+                    print(separado[k])
                     if paso == 2:
-                        for nuevo in range(quedoEn, len(self.hileraPorLetras)): #bcd
+                        for nuevo in range(quedoEn+1, len(self.hileraPorLetras)): #bcd
                             #for u in range(0, len(self.var)):   #var xyzw
                                 if separado[k] in self.var :
+                                    print("var? paso2")
                                 #if separado[k] == self.var[u]:   #x == x #solo verifica que este entre las variables
                                     for h in range(0, len(self.symbols)):    #recorre todo el abecedario
                                         if self.hileraPorLetras[nuevo] == self.symbols[h]:
+                                            print("entro a if de simbolos")
                                             quedoEn = nuevo
                                             paso = 2
                                             self.reglasQueUsa.append(separado[k]) #x
@@ -322,6 +327,7 @@ class Ui_MainWindow(object):
                                             break
                                     break        
                                 else: #si es un marker
+                                    print("Markador? " ,separado[k],"Hilera: ",self.hileraPorLetras[nuevo])
                                     if self.hileraPorLetras[nuevo] == separado[k]: #a == a  for i sibolos, separado[i] == self.hileraPorLetras[n]
                                         quedoEn = nuevo
                                         paso = 2
@@ -337,7 +343,7 @@ class Ui_MainWindow(object):
                                 #if separado[k] == self.var[u]:   #x == x #solo verifica que este entre las variables
                                 print(separado[k], "Hilera0:",self.hileraPorLetras[n])
                                 if separado[k] in self.var :
-                                    print("Mamo")
+                                    print("entro a si en un var")
                                     #print(separado[k])
                                     for h in range(0, len(self.symbols)):    #recorre todo el abecedario
                                         if self.hileraPorLetras[n] == self.symbols[h]:
@@ -362,7 +368,13 @@ class Ui_MainWindow(object):
                                         pos = n
                                         break
                                     break
-            print(letraAGuardar," reglaUso:",self.reglasQueUsa)
+               #separaRegla = [word[0] for word in self.reglasBeforeArrow[i]]
+                #if separaRegla == reglasUso:
+                    #remplazo
+                    #break
+                #print(separaRegla, "Guardo: ",reglasUso)    
+            
+            print(letraAGuardar," reglasQueUsa:",self.reglasQueUsa)
         #-------------------LO DEL REMPLAZO ESTA EN PSEUDOCODIGO, TENGO QUE PASARLO A PYTHON-----------------
                 #HACER REMPLAZO AQUI
                 #for k de self.reglasBeforeArrow

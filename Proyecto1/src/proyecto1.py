@@ -7,7 +7,6 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
 
 class Ui_MainWindow(object):
@@ -189,66 +188,102 @@ class Ui_MainWindow(object):
                                         #VERIFICAR SI ES UN SIMBOLO O MARKERS Y GUARDARLA EN UNA NUEVA VARIABLE "GLOBAL
 
                     else:
+                        
                         if '>' in letras :
                             banderaReglasConSentido = 0
+                            reglasBuenasBA = 0
+                            reglasBuenasAA = 0
+                            banderaReglasConSentidoDespuesFlecha = 0
                             sinEspacios = lines[i].replace(" ", "")
                             self.reglasSeparadasPorFlecha = (sinEspacios).split('->')
                             verificaBA = self.reglasSeparadasPorFlecha[0]
-
+                            verificaAA = self.reglasSeparadasPorFlecha[1]
                             for varRegl in range(0 , len(verificaBA)):      #verificaVarsBA = reglas antes de la flecha
-
+                                                      #1 = 1
                                 for v in range(0 , len(self.var)):              #total de vars, ejm: abdcefgh
                                     if verificaBA[varRegl] == self.var[v]:      #recorre todas las vars y verifica si esta ahi
                                         banderaReglasConSentido = banderaReglasConSentido+5
-
+                                        reglasBuenasBA = reglasBuenasBA+1
                                     else:
                                         banderaReglasConSentido = banderaReglasConSentido+0
 
                                 for s in range(0 , len(self.markers)):           #total de markers, ejm: BG
                                     if verificaBA[varRegl] == self.markers[s]:   #recorre todas las markers y verifica si esta ahi
                                         banderaReglasConSentido = banderaReglasConSentido+5
-
+                                        reglasBuenasBA = reglasBuenasBA+1
                                     else:
                                         banderaReglasConSentido = banderaReglasConSentido+0
+                                        
+                            for varRegl in range(0 , len(verificaAA)):      #verificaVarsBA = reglas antes de la flecha
 
-                            if banderaReglasConSentido > 0:
+                                for v in range(0 , len(self.var)):              #total de vars, ejm: abdcefgh
+                                    if verificaAA[varRegl] == self.var[v]:      #recorre todas las vars y verifica si esta ahi
+                                        banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+5
+                                        reglasBuenasAA = reglasBuenasAA+1
+                                    else:
+                                        banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+0
+
+                                for s in range(0 , len(self.markers)):           #total de markers, ejm: BG
+                                    if verificaAA[varRegl] == self.markers[s]:   #recorre todas las markers y verifica si esta ahi
+                                        banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+5
+                                        reglasBuenasAA = reglasBuenasAA+1
+                                    else:
+                                        banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+0   
+                            if len(verificaBA) == reglasBuenasBA and len(verificaAA) == reglasBuenasAA:      
                                 self.reglasBeforeArrow.append(self.reglasSeparadasPorFlecha[0])
                                 self.reglasAfterArrow.append(self.reglasSeparadasPorFlecha[1])
                             else:
                                 self.reglasBeforeArrow.append("INCORRECTO")
                                 self.reglasAfterArrow.append("INCORRECTO")
                             #print(self.reglasBeforeArrow)
-                        if '→' in letras :  
+                        elif '?' in letras :   
+                            print("reglasSeparadasPorFlecha")
                             banderaReglasConSentido = 0
+                            reglasBuenasBA = 0
+                            reglasBuenasAA = 0
                             sinEspacios2 = lines[i].replace(" ", "")
-                            self.reglasSeparadasPorFlecha = (sinEspacios2).split('→')
+                            self.reglasSeparadasPorFlecha = (sinEspacios2).split('?')
                             verificaBA = self.reglasSeparadasPorFlecha[0]
-                            
+                            verificaAA = self.reglasSeparadasPorFlecha[1]
+                            print(reglasSeparadasPorFlecha)
                             for varRegl in range(0 , len(verificaBA)):      #verificaVarsBA = reglas antes de la flecha
-
+                                                      #1 = 1
                                 for v in range(0 , len(self.var)):              #total de vars, ejm: abdcefgh
                                     if verificaBA[varRegl] == self.var[v]:      #recorre todas las vars y verifica si esta ahi
                                         banderaReglasConSentido = banderaReglasConSentido+5
-
+                                        reglasBuenasBA = reglasBuenasBA+1
                                     else:
                                         banderaReglasConSentido = banderaReglasConSentido+0
 
                                 for s in range(0 , len(self.markers)):           #total de markers, ejm: BG
                                     if verificaBA[varRegl] == self.markers[s]:   #recorre todas las markers y verifica si esta ahi
                                         banderaReglasConSentido = banderaReglasConSentido+5
-
+                                        reglasBuenasBA = reglasBuenasBA+1
                                     else:
                                         banderaReglasConSentido = banderaReglasConSentido+0
+                                        
+                            for varRegl in range(0 , len(verificaAA)):      #verificaVarsBA = reglas antes de la flecha
 
-                            if banderaReglasConSentido > 0:
+                                for v in range(0 , len(self.var)):              #total de vars, ejm: abdcefgh
+                                    if verificaAA[varRegl] == self.var[v]:      #recorre todas las vars y verifica si esta ahi
+                                        banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+5
+                                        reglasBuenasAA = reglasBuenasAA+1
+                                    else:
+                                        banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+0
+
+                                for s in range(0 , len(self.markers)):           #total de markers, ejm: BG
+                                    if verificaAA[varRegl] == self.markers[s]:   #recorre todas las markers y verifica si esta ahi
+                                        banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+5
+                                        reglasBuenasAA = reglasBuenasAA+1
+                                    else:
+                                        banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+0   
+                            if len(verificaBA) == reglasBuenasBA and len(verificaAA) == reglasBuenasAA:      
                                 self.reglasBeforeArrow.append(self.reglasSeparadasPorFlecha[0])
                                 self.reglasAfterArrow.append(self.reglasSeparadasPorFlecha[1])
+                            
                             else:
                                 self.reglasBeforeArrow.append("INCORRECTO")
                                 self.reglasAfterArrow.append("INCORRECTO")
-                            #self.reglasBeforeArrow.append(self.reglasSeparadasPorFlecha[0])
-                            #self.reglasAfterArrow.append(self.reglasSeparadasPorFlecha[1])
-                            #print(self.reglasBeforeArrow)
                         else:
                             self.hileraUsuario = lines[i] # puede ir en el if de arriba, de la flecha
             print(self.reglasBeforeArrow ,"->", self.reglasAfterArrow , "hilera del Usuario:",self.hileraUsuario)    
@@ -259,25 +294,56 @@ class Ui_MainWindow(object):
 #                    self.reglasBeforeArrow      #["βx", "xβ" , "x"]  
 
     #HACER QUE X = ABCDEFGHI...
-    #--------------------READY TO RUMBLEEEEEEEEE----------------------
-            self.hileraPorLetras = [word[0] for word in self.hileraUsuario]
-            paso = 1
-            quedoEn = 0
-            for i in range(0, len(self.reglasBeforeArrow)):
-                separado = [word[0] for word in self.reglasBeforeArrow[i]]
-                for k in range(0, len(separado)):
-                    if paso == 2:
-                        for nuevo in range(quedoEn, len(self.hileraPorLetras)):
-                            if self.hileraPorLetras[nuevo] == separado[k]:
-                                quedoEn = nuevo
-                                self.reglasQueUsa.append(separado[k])
-                    if paso == 1:   
-                        for n in range(0, len(self.hileraPorLetras)):
-                            if self.hileraPorLetras[n] == separado[k]:
-                                quedoEn = n
-                                paso = 2
-                                self.reglasQueUsa.append(separado[k])
-                                
+    #--------------------READY TO RUMBLEEEEEEEEE,  FALTA VERIFICAR IF VARIABLES SON SIMBOLOS, x=a----------------------
+#            self.hileraPorLetras = [word[0] for word in self.hileraUsuario]#abcd = 
+#            paso = 1
+#            quedoEn = 0
+#            reglasUso = []
+#            letraAGuardar = []
+#            for i in range(0, len(self.reglasBeforeArrow)): #xBx
+#                separado = [word[0] for word in self.reglasBeforeArrow[i]]
+#                for k in range(0, len(separado)): #[x,B] , vars wxyz->abcdefg...
+#                    if paso == 2:
+#                        for nuevo in range(quedoEn, len(self.hileraPorLetras)): #bcd
+#                            if self.hileraPorLetras[nuevo] == separado[k]: 
+#                                quedoEn = nuevo
+#                                self.reglasQueUsa.append(separado[k])
+#                                reglasUso.append(separado[k])
+#                                letraAGuardar.append(self.hileraPorLetras[n]) 
+#                                break
+#                    if paso == 1:   
+#                        for n in range(0, len(self.hileraPorLetras)): #aBc
+#                            if self.hileraPorLetras[n] == separado[k]: #B=x for,B=x for, a=x if
+#                                quedoEn = n
+#                                paso = 2
+#                                self.reglasQueUsa.append(separado[k]) #x
+#                                reglasUso.append(separado[k])
+#                                letraAGuardar.append(self.hileraPorLetras[n]) #ab
+#                                #guardar self.hileraPorLetras[n] en variable =LETRA
+#                                #y posicion =pos
+#                                break
+        #-------------------LO DEL REMPLAZO ESTA EN PSEUDOCODIGO, TENGO QUE PASARLO A PYTHON-----------------
+                #HACER REMPLAZO AQUI
+                #for k de self.reglasBeforeArrow
+                    #if reglasUso == self.reglasBeforeArrow[k] #
+                        #lo que agarro arriba LETRA = a
+                        #lo que agarro arriba pos = 0
+                        #for j de self.reglasAfterArrow[k]
+                            #tuanis = self.reglasAfterArrow[k] # tuanis[j] = x
+                            #for n de todas las variables, var
+                                #if tuanis[j] = var[n] #si es una variable, osea xyz
+                                    #for m de letraAGuardar
+                                    #datosARemplazar = letraAGuardar[m]
+                                    #letraAGuardar.remove(letraAGuardar[m])
+                                    #CREOQUENAAAAHHH  hileraporletras[pos] = LETRA #a
+                                    #guardoUnaVar = 1
+                                    #break;
+                            #if guardoUnaVar != 1 : #si es un marker
+                                #hileraporletras[pos] = tuanis[j] # si es un marker = Beta,Alpha...
+                        #hileraporletras[pos] = datosARemplazar #= aB
+    #x->Bx  
+    #abcd
+    #
    #------------------------------------------------------------------------------------
 #                hileraPorLetras = (hilera.splitPorLetras) // [a,b,c,β,d]
 #                //beforeArrow = ["βx", "xβ" , "x"]
@@ -302,17 +368,7 @@ class Ui_MainWindow(object):
 #                for m in range(0,len(self.var))
 #                    if(x == self.var[m]) #x es lo que ingresa el mae
                     #self.varsSepadaras 
-                
-                
-#                if 0< notaAlumno <6:     print("Insuficiente") 
-#                elif notaAlumno > 0 and notaAlumno<7:     print("Suficiente") 
-#                elif notaAlumno > 0 and notaAlumno<8:     print("Bien") 
-#                elif notaAlumno > 0 and notaAlumno<9:     print("Notable") 
-#                else:     print("Sobresaliente")
-                
-   
-        
-        
+                        
 
 if __name__ == "__main__":
     import sys

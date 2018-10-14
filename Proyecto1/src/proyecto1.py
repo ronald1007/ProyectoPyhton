@@ -82,6 +82,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.actionCerrar.triggered.connect(MainWindow.close)
         self.actionAbrir.triggered.connect(self.openFileNameDialog)
+        self.actionGuardar.triggered.connect(self.guardarArchivoDeTexto)
         #self.actionAbrir.triggered.connect(self.openFileNamesDialog)
         #self.actionAbrir.triggered.connect(self.saveFileDialog)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -115,10 +116,23 @@ class Ui_MainWindow(object):
 #        if fileName:
 #           print(fileName)
         
+    def guardarArchivoDeTexto(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getSaveFileName(None,"Guardar", " ","All Files (*)", options=options)
+        #if fileName:
+        #    print(fileName)
+        print(fileName)
+        with open(fileName, 'w') as f:
+            f.write(self.campoSalida.toPlainText())
+            #f.write(self.text_edit.toPlainText())
+    
+    
+    
     def openFileNameDialog(self):    
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(None,"QFileDialog.getOpenFileNames()", " ","All Files (*)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(None,"Abrir", " ","All Files (*)", options=options)
         #if fileName:
         #    print(fileName)
         

@@ -296,38 +296,42 @@ class Ui_MainWindow(object):
 #            reglasUso = []
 #            letraAGuardar = []
 #            pos = 0;
-        #for gigante hasta el infito , hasta el terminal
+        #for gigante hasta el infito , hasta el terminal o While
+            self.hileraPorLetras = [word[0] for word in self.hileraUsuario]#abcd = 
             for i in range(0, len(self.reglasBeforeArrow)): #xBx
-                self.hileraPorLetras = [word[0] for word in self.hileraUsuario]#abcd = 
                 paso = 1
                 quedoEn = 0
                 reglasUso = []
                 letraAGuardar = []
+                datosARemplazar = []
                 pos = 0;
-                print("Reglas antrs flecha Tofas: ",self.reglasBeforeArrow)
+                posicionesACambiar = []
+                guardoVar = 0
+                print("Reglas antrs flecha Todas: ",self.reglasBeforeArrow)
                 separado = [word[0] for word in self.reglasBeforeArrow[i]]
-                print("Reglas de 0 separadas",separado)
+                #print("Reglas de 0 separadas",separado)
                 for k in range(0, len(separado)): #[x,B] , vars wxyz->abcdefg...
-                    print(separado[k])
+                    #print(separado[k])
                     if paso == 2:
                         for nuevo in range(quedoEn+1, len(self.hileraPorLetras)): #bcd
                             #for u in range(0, len(self.var)):   #var xyzw
                                 if separado[k] in self.var :
-                                    print("var? paso2")
+                                    #print("var? paso2")
                                 #if separado[k] == self.var[u]:   #x == x #solo verifica que este entre las variables
                                     for h in range(0, len(self.symbols)):    #recorre todo el abecedario
                                         if self.hileraPorLetras[nuevo] == self.symbols[h]:
-                                            print("entro a if de simbolos")
+                                            #print("entro a if de simbolos")
                                             quedoEn = nuevo
                                             paso = 2
                                             self.reglasQueUsa.append(separado[k]) #x
                                             reglasUso.append(separado[k])
                                             letraAGuardar.append(self.hileraPorLetras[nuevo]) #ab
                                             pos = nuevo
+                                            posicionesACambiar.append(nuevo)
                                             break
                                     break        
                                 else: #si es un marker
-                                    print("Markador? " ,separado[k],"Hilera: ",self.hileraPorLetras[nuevo])
+                                    #print("Markador? " ,separado[k],"Hilera: ",self.hileraPorLetras[nuevo])
                                     if self.hileraPorLetras[nuevo] == separado[k]: #a == a  for i sibolos, separado[i] == self.hileraPorLetras[n]
                                         quedoEn = nuevo
                                         paso = 2
@@ -335,30 +339,32 @@ class Ui_MainWindow(object):
                                         reglasUso.append(separado[k])
                                         letraAGuardar.append(self.hileraPorLetras[nuevo]) #ab
                                         pos = nuevo
+                                        posicionesACambiar.append(nuevo)
                                         break
                                     break
                     if paso == 1:   
                         for n in range(0, len(self.hileraPorLetras)): #aBc
                             #for u in range(0, len(self.var)): #var xyzw
                                 #if separado[k] == self.var[u]:   #x == x #solo verifica que este entre las variables
-                                print(separado[k], "Hilera0:",self.hileraPorLetras[n])
+                                #print(separado[k], "Hilera0:",self.hileraPorLetras[n])
                                 if separado[k] in self.var :
-                                    print("entro a si en un var")
+                                    #print("entro a si en un var")
                                     #print(separado[k])
                                     for h in range(0, len(self.symbols)):    #recorre todo el abecedario
                                         if self.hileraPorLetras[n] == self.symbols[h]:
-                                            print("Entro a if")
+                                            #print("Entro a if")
                                             quedoEn = n
                                             paso = 2
                                             self.reglasQueUsa.append(separado[k]) #x
                                             reglasUso.append(separado[k])
                                             letraAGuardar.append(self.hileraPorLetras[n]) #ab
                                             pos = n
+                                            posicionesACambiar.append(n)
                                             break
                                         #for    
                                     break
                                 else: #si es un marker
-                                    print("Sirvio",self.hileraPorLetras[n])
+                                    #print("Sirvio",self.hileraPorLetras[n])
                                     if self.hileraPorLetras[n] == separado[k]: #a == a  for i sibolos, separado[i] == self.hileraPorLetras[n]
                                         quedoEn = n
                                         paso = 2
@@ -366,10 +372,65 @@ class Ui_MainWindow(object):
                                         reglasUso.append(separado[k])
                                         letraAGuardar.append(self.hileraPorLetras[n]) #ab
                                         pos = n
+                                        posicionesACambiar.append(n)
                                         break
+                                    break 
+                                    
+                separaRegla = [word[0] for word in self.reglasBeforeArrow[i]]
+                print(separaRegla," == ",reglasUso)
+                if separaRegla == reglasUso: #verifica la regla que se esta usando, para agarrar la after arrow de esa
+                    print("Entra a reglas iguales")
+                    for r in range(0, len(self.reglasAfterArrow[i])): #xB
+                        guardoVar = 0
+                        tuanis = self.reglasAfterArrow[i] #tuanis[i] = x
+                        for f in range(0, len(self.var)):
+                            if tuanis[r] == self.var[f]:
+                                for y in range(0, len(letraAGuardar)):
+                                    datosARemplazar = letraAGuardar[y]
+                                    letraAGuardar.remove(letraAGuardar[y])
+                                    guardoVar = 1
+                                    print("AQUIII")  
                                     break
-               #separaRegla = [word[0] for word in self.reglasBeforeArrow[i]]
-                #if separaRegla == reglasUso:
+                        if guardoVar != 1 : #si es un marker
+                            print(tuanis[r])
+                            print(posicionesACambiar)
+                            est=0
+                            bande = 0
+                            for s in range(0, len(posicionesACambiar)):
+                                for e in range(est, len(tuanis)):
+                                    print("Tamano",len(tuanis))
+                                    print("Tuanis: ",tuanis[e])
+                                    self.hileraPorLetras[posicionesACambiar[s]] = tuanis[e]  #Bx
+                                    #print(hileraPorLetras)
+                                    bande = 1
+                                    est = est+1
+                                    break
+                                if bande == 1:
+                                    del self.hileraPorLetras[posicionesACambiar[s]]
+                                    
+                                    #tuanis.remove(tuanis[e])
+                                   
+#                                    if len(tuanis)>1:
+#                                        print("Sigue?")
+#                                        self.hileraPorLetras[posicionesACambiar[s]] = tuanis[e]
+#                                        est = est+1
+#                                        #tuanis.remove(tuanis[e])
+#                                        print("DEMENTE") 
+#                                        #pass
+#                                    else:
+#                                        self.hileraPorLetras[posicionesACambiar[s]] = tuanis[e]
+                                    #self.hileraPorLetras.remove(self.hileraPorLetras[s])
+                                #aB
+                                #a0 b1 c2 d3
+                                #[aB]0 [b]1 [c]2 [c]3
+                                print("FORANTSW")  
+                            print("Sigue en for")  
+                            #self.hileraPorLetras[posicionesACambiar[0]] = tuanis[r] # si es un marker = Beta,Alpha...
+                    #print("Antes:",self.hileraPorLetras,"Pos: ",self.hileraPorLetras[pos])
+                    #self.hileraPorLetras[pos] = datosARemplazar
+                    print("Despues:",self.hileraPorLetras)          
+                            
+                        
                     #remplazo
                     #break
                 #print(separaRegla, "Guardo: ",reglasUso)    
@@ -381,6 +442,7 @@ class Ui_MainWindow(object):
                     #if reglasUso == self.reglasBeforeArrow[k] #
                         #lo que agarro arriba LETRA = a
                         #lo que agarro arriba pos = 0
+                        #desde aqui------>
                         #for j de self.reglasAfterArrow[k]
                             #tuanis = self.reglasAfterArrow[k] # tuanis[j] = x
                             #for n de todas las variables, var

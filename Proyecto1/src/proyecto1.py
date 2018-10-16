@@ -671,12 +671,6 @@ class Ui_MainWindow(object):
             #fin del for que guarda todas variables
     #------------------------------------------------------------------------------------------------------------------
     #--------------------READY TO RUMBLEEEEEEEEE,  FALTA VERIFICAR IF VARIABLES SON SIMBOLOS, x=a----------------------
-#            self.hileraPorLetras = [word[0] for word in self.hileraUsuario]#abcd = 
-#            paso = 1
-#            quedoEn = 0
-#            reglasUso = []
-#            letraAGuardar = []
-#            pos = 0;
         #for gigante hasta el infito , hasta el terminal o While
             self.hileraPorLetras = [word[0] for word in self.hileraUsuario]#abcd = 
             for i in range(0, len(self.reglasBeforeArrow)): #xBx
@@ -756,54 +750,72 @@ class Ui_MainWindow(object):
                                         posicionesACambiar.append(n)
                                         break
                                     break 
-                                    
+                #=======================HASTA AQUI SIRVE===============================
                 separaRegla = [word[0] for word in self.reglasBeforeArrow[i]]
                 print(separaRegla," == ",reglasUso)
                 if separaRegla == reglasUso: #verifica la regla que se esta usando, para agarrar la after arrow de esa
                     print("Entra a reglas iguales")
                     for r in range(0, len(self.reglasAfterArrow[i])): #xB
                         guardoVar = 0
-                        tuanis = self.reglasAfterArrow[i] #tuanis[i] = x
-                        for f in range(0, len(self.var)):
+                        tuanis = self.reglasAfterArrow[i] #AGARRA LETRAS DEL AFTERARROW UNA POR UNA
+                        for f in range(0, len(self.var)): #ver si la primera regla de las letras afterarrow es var!!
                             if tuanis[r] == self.var[f]:
-                                for y in range(0, len(letraAGuardar)):
+                                for y in range(0, len(letraAGuardar)):  #Agarra la primera letra de letras a guardar y la elimina
                                     datosARemplazar = letraAGuardar[y]
                                     letraAGuardar.remove(letraAGuardar[y])
                                     guardoVar = 1
                                     print("AQUIII")  
                                     break
                         if guardoVar != 1 : #si es un marker
-                            print(tuanis[r])
-                            print(posicionesACambiar)
+                            print("Letra:",tuanis[r])
+                            print("Pos[]:",posicionesACambiar)
                             est=0
                             bande = 0
-                            for s in range(0, len(posicionesACambiar)):
-                                for e in range(est, len(tuanis)):
-                                    print("Tamano",len(tuanis))
-                                    print("Tuanis: ",tuanis[e])
-                                    self.hileraPorLetras[posicionesACambiar[s]] = tuanis[e]  #Bx
-                                    #print(hileraPorLetras)
-                                    bande = 1
-                                    est = est+1
-                                    break
-                                if bande == 1:
-                                    del self.hileraPorLetras[posicionesACambiar[s]]
-                                    
-                                    #tuanis.remove(tuanis[e])
-                                   
-#                                    if len(tuanis)>1:
-#                                        print("Sigue?")
-#                                        self.hileraPorLetras[posicionesACambiar[s]] = tuanis[e]
-#                                        est = est+1
-#                                        #tuanis.remove(tuanis[e])
-#                                        print("DEMENTE") 
-#                                        #pass
-#                                    else:
-#                                        self.hileraPorLetras[posicionesACambiar[s]] = tuanis[e]
-                                    #self.hileraPorLetras.remove(self.hileraPorLetras[s])
-                                #aB
-                                #a0 b1 c2 d3
-                                #[aB]0 [b]1 [c]2 [c]3
+                            #==============================================================================================
+                            if len(posicionesACambiar) > len(self.reglasAfterArrow): # si hay mas posiciones que letras
+                                print("if")							          #xB->x	  xxB->Bx
+                                diferencia = len(posicionesACambiar) - len(self.reglasAfterArrow) #2 - 1 = 1; 3  - 2 = 1; ELIMINAR LA DIFERENCIA
+                                print("tamPosicioneCambiar: ",len(posicionesACambiar),"TamReglasAfterAfrr",len(self.reglasAfterArrow))
+                                difParaFor = len(posicionesACambiar) - diferencia
+                                print("Cant a Guardar en hilera: ",difParaFor)			
+                                for eli in range(0 , difParaFor): #0 hasta 0
+                                    print("Psicion a cambiar: ", eli)
+                                    for e in range(est, len(tuanis)):
+                                        print("Posicion a cambiar: ",posicionesACambiar[eli])
+                                        self.hileraPorLetras[posicionesACambiar[eli]] = tuanis[e] #posicionesACambiar[]=[2,1];posicionesACambiar[0]=2
+                                        print("sin eliminar: ",self.hileraPorLetras)
+                                        del posicionesACambiar[eli]
+                                        #bande = 1
+                                        print("despues del remove")
+                                        est = est+1
+                                        break
+                                print("Pos 2 = ",self.hileraPorLetras[2])				
+                                for limpia in range(0 , len(posicionesACambiar)):#borra las posiciones que sobran
+                                    print("Limpia pos en hilera: ", posicionesACambiar[limpia] )
+                                    if limpia > 0:
+                                        del self.hileraPorLetras[posicionesACambiar[limpia-1]]
+                                    else:
+                                        del self.hileraPorLetras[posicionesACambiar[limpia]]
+                                print("Listo?: ",self.hileraPorLetras)
+								
+							#break se sale de un for y queda en el anterior
+                            #==============================================================================================
+                            
+                            #Descomentar, desde aqui
+#                            for s in range(0, len(posicionesACambiar)): #2 posiciones para cambiar soloo una letra
+#                                for e in range(est, len(tuanis)):
+#                                    print("Posiciones: ",posicionesACambiar)
+#                                    print("Tamano",len(tuanis))
+#                                    print("Tuanis: ",tuanis[e])
+#                                    self.hileraPorLetras[posicionesACambiar[s]] = tuanis[e]  #Bx
+#                                    #print(hileraPorLetras)
+#                                    bande = 1
+#                                    est = est+1
+#                                    break
+#                                if bande == 1:
+#                                    del self.hileraPorLetras[posicionesACambiar[s]]
+                            #Hasta aqui  
+                            
                                 print("FORANTSW")  
                             print("Sigue en for")  
                             #self.hileraPorLetras[posicionesACambiar[0]] = tuanis[r] # si es un marker = Beta,Alpha...

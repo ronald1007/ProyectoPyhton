@@ -346,30 +346,30 @@ class Ui_MainWindow(object):
         self.actionDebug.setText(_translate("MainWindow", "Debug"))
     
         #NUEVO----------------------------------------------------------
-        self.pushButton.setText(_translate("MainWindow", "α"))
-        self.pushButton_2.setText(_translate("MainWindow", "β"))
-        self.pushButton_3.setText(_translate("MainWindow", "γ"))
-        self.pushButton_4.setText(_translate("MainWindow", "δ"))
-        self.pushButton_5.setText(_translate("MainWindow", "ε"))
-        self.pushButton_6.setText(_translate("MainWindow", "ζ"))
-        self.pushButton_7.setText(_translate("MainWindow", "η"))
-        self.pushButton_8.setText(_translate("MainWindow", "θ"))
-        self.pushButton_9.setText(_translate("MainWindow", "ι"))
-        self.pushButton_10.setText(_translate("MainWindow", "κ"))
-        self.pushButton_11.setText(_translate("MainWindow", "λ"))
-        self.pushButton_12.setText(_translate("MainWindow", "μ"))
-        self.pushButton_13.setText(_translate("MainWindow", "ν"))
-        self.pushButton_14.setText(_translate("MainWindow", "ξ"))
-        self.pushButton_15.setText(_translate("MainWindow", "ο"))
-        self.pushButton_16.setText(_translate("MainWindow", "π"))
-        self.pushButton_17.setText(_translate("MainWindow", "ρ"))
-        self.pushButton_18.setText(_translate("MainWindow", "σ"))
-        self.pushButton_19.setText(_translate("MainWindow", "τ"))
-        self.pushButton_20.setText(_translate("MainWindow", "υ"))
-        self.pushButton_21.setText(_translate("MainWindow", "φ"))
-        self.pushButton_23.setText(_translate("MainWindow", "χ"))
-        self.pushButton_24.setText(_translate("MainWindow", "ψ"))
-        self.pushButton_25.setText(_translate("MainWindow", "ω"))
+        self.pushButton.setText(_translate("MainWindow", "A"))
+        self.pushButton_2.setText(_translate("MainWindow", "A"))
+        self.pushButton_3.setText(_translate("MainWindow", "A"))
+        self.pushButton_4.setText(_translate("MainWindow", "A"))
+        self.pushButton_5.setText(_translate("MainWindow", "A"))
+        self.pushButton_6.setText(_translate("MainWindow", "A"))
+        self.pushButton_7.setText(_translate("MainWindow", "A"))
+        self.pushButton_8.setText(_translate("MainWindow", "A"))
+        self.pushButton_9.setText(_translate("MainWindow", "A"))
+        self.pushButton_10.setText(_translate("MainWindow", "A"))
+        self.pushButton_11.setText(_translate("MainWindow", "A"))
+        self.pushButton_12.setText(_translate("MainWindow", "A"))
+        self.pushButton_13.setText(_translate("MainWindow", "A"))
+        self.pushButton_14.setText(_translate("MainWindow", "A"))
+        self.pushButton_15.setText(_translate("MainWindow", "A"))
+        self.pushButton_16.setText(_translate("MainWindow", "A"))
+        self.pushButton_17.setText(_translate("MainWindow", "A"))
+        self.pushButton_18.setText(_translate("MainWindow", "A"))
+        self.pushButton_19.setText(_translate("MainWindow", "A"))
+        self.pushButton_20.setText(_translate("MainWindow", "A"))
+        self.pushButton_21.setText(_translate("MainWindow", "A"))
+        self.pushButton_23.setText(_translate("MainWindow", "A"))
+        self.pushButton_24.setText(_translate("MainWindow", "A"))
+        self.pushButton_25.setText(_translate("MainWindow", "A"))
       
         #print(self.pushButton.text())
         #self.campoIngresa.clicked.connect(self.leerLineaPorLinea)
@@ -667,7 +667,8 @@ class Ui_MainWindow(object):
                                 self.reglasAfterArrow.append("INCORRECTO")
                         else:
                             self.hileraUsuario = lines[i] # puede ir en el if de arriba, de la flecha
-            print(self.reglasBeforeArrow ,"->", self.reglasAfterArrow , "hilera del Usuario:",self.hileraUsuario)    
+            print(self.reglasBeforeArrow ,"->", self.reglasAfterArrow , "hilera del Usuario:",self.hileraUsuario)  
+            
             #fin del for que guarda todas variables
     #------------------------------------------------------------------------------------------------------------------
     #--------------------READY TO RUMBLEEEEEEEEE,  FALTA VERIFICAR IF VARIABLES SON SIMBOLOS, x=a----------------------
@@ -712,7 +713,7 @@ class Ui_MainWindow(object):
                                         paso = 2
                                         self.reglasQueUsa.append(separado[k]) #x
                                         reglasUso.append(separado[k])
-                                        letraAGuardar.append(self.hileraPorLetras[nuevo]) #ab
+                                        #letraAGuardar.append(self.hileraPorLetras[nuevo]) #ab
                                         pos = nuevo
                                         posicionesACambiar.append(nuevo)
                                         break
@@ -745,7 +746,7 @@ class Ui_MainWindow(object):
                                         paso = 2
                                         self.reglasQueUsa.append(separado[k]) #x
                                         reglasUso.append(separado[k])
-                                        letraAGuardar.append(self.hileraPorLetras[n]) #ab
+                                        #letraAGuardar.append(self.hileraPorLetras[n]) #ab
                                         pos = n
                                         posicionesACambiar.append(n)
                                         break
@@ -754,53 +755,105 @@ class Ui_MainWindow(object):
                 separaRegla = [word[0] for word in self.reglasBeforeArrow[i]]
                 print(separaRegla," == ",reglasUso)
                 if separaRegla == reglasUso: #verifica la regla que se esta usando, para agarrar la after arrow de esa
-                    print("Entra a reglas iguales")
-                    for r in range(0, len(self.reglasAfterArrow[i])): #xB
+                        print("Entra a reglas iguales")
+                    #for r in range(0, len(self.reglasAfterArrow[i])): #xB
+                        print(self.reglasAfterArrow)
                         guardoVar = 0
                         tuanis = self.reglasAfterArrow[i] #AGARRA LETRAS DEL AFTERARROW UNA POR UNA
-                        for f in range(0, len(self.var)): #ver si la primera regla de las letras afterarrow es var!!
-                            if tuanis[r] == self.var[f]:
-                                for y in range(0, len(letraAGuardar)):  #Agarra la primera letra de letras a guardar y la elimina
-                                    datosARemplazar = letraAGuardar[y]
-                                    letraAGuardar.remove(letraAGuardar[y])
-                                    guardoVar = 1
-                                    print("AQUIII")  
-                                    break
-                        if guardoVar != 1 : #si es un marker
-                            print("Letra:",tuanis[r])
-                            print("Pos[]:",posicionesACambiar)
-                            est=0
-                            bande = 0
                             #==============================================================================================
-                            if len(posicionesACambiar) > len(self.reglasAfterArrow): # si hay mas posiciones que letras
-                                print("if")							          #xB->x	  xxB->Bx
-                                diferencia = len(posicionesACambiar) - len(self.reglasAfterArrow) #2 - 1 = 1; 3  - 2 = 1; ELIMINAR LA DIFERENCIA
-                                print("tamPosicioneCambiar: ",len(posicionesACambiar),"TamReglasAfterAfrr",len(self.reglasAfterArrow))
+                        est=0
+                        #bande = 0
+                        print("Pos a cambiar:",len(posicionesACambiar),"ReglasAfterAr: ",len(self.reglasAfterArrow[i]))
+                        
+                        if len(posicionesACambiar) > len(self.reglasAfterArrow[i]):
+                                print("Pos menor a Antes Arrow")
+                                diferencia = len(posicionesACambiar) - len(self.reglasAfterArrow[i]) #2 - 1 = 1; 3  - 2 = 1; ELIMINAR LA DIFERENCIA
                                 difParaFor = len(posicionesACambiar) - diferencia
-                                print("Cant a Guardar en hilera: ",difParaFor)			
+								
                                 for eli in range(0 , difParaFor): #0 hasta 0
-                                    print("Psicion a cambiar: ", eli)
                                     for e in range(est, len(tuanis)):
-                                        print("Posicion a cambiar: ",posicionesACambiar[eli])
-                                        self.hileraPorLetras[posicionesACambiar[eli]] = tuanis[e] #posicionesACambiar[]=[2,1];posicionesACambiar[0]=2
-                                        print("sin eliminar: ",self.hileraPorLetras)
-                                        del posicionesACambiar[eli]
-                                        #bande = 1
-                                        print("despues del remove")
-                                        est = est+1
-                                        break
-                                print("Pos 2 = ",self.hileraPorLetras[2])				
+                                        print("evaluando: ",tuanis[e])		
+                                        if tuanis[e] in self.var :
+                                            print("Es variable, posiciones: ",posicionesACambiar," eli:",eli, " Letras: ",letraAGuardar)
+                                            self.hileraPorLetras[posicionesACambiar[eli]] = letraAGuardar[0] #posicionesACambiar[]=[2,1];posicionesACambiar[0]=2
+                                            posicionesACambiar.remove(eli)
+                                            del letraAGuardar[0] #pos 0 siempre
+                                            #letraAGuardar.remove[0]
+                                            #bande = 1
+                                            est = est+1
+                                            break
+									
+                                        elif tuanis[e] in self.markers :
+                                            print("Es marcador")
+                                            self.hileraPorLetras[posicionesACambiar[eli]] = tuanis[e] #posicionesACambiar[]=[2,1];posicionesACambiar[0]=2
+                                            del posicionesACambiar[eli]
+                                            #bande = 1
+                                            est = est+1
+                                            break
+				
                                 for limpia in range(0 , len(posicionesACambiar)):#borra las posiciones que sobran
                                     print("Limpia pos en hilera: ", posicionesACambiar[limpia] )
                                     if limpia > 0:
                                         del self.hileraPorLetras[posicionesACambiar[limpia-1]]
                                     else:
-                                        del self.hileraPorLetras[posicionesACambiar[limpia]]
-                                print("Listo?: ",self.hileraPorLetras)
+                                        del self.hileraPorLetras[posicionesACambiar[limpia]]						
+                                        	
+                        elif len(posicionesACambiar) == len(self.reglasAfterArrow[i]):
+                            print("***Tamano igual")
+                            for eli in range(0 , len(posicionesACambiar)):
+                                for e in range(est, len(tuanis)):
+                                    print("evaluando: ",tuanis[e])
+                                    if tuanis[e] in self.var :
+                                        print("Es variable, posiciones: ",posicionesACambiar," eli:",eli, " Letras: ",letraAGuardar)
+                                        self.hileraPorLetras[eli] = letraAGuardar[0]
+                                        print("Hilera despues de Var atesdesalir: ",self.hileraPorLetras)
+                                        #self.hileraPorLetras[posicionesACambiar[eli]] = letraAGuardar[0]  #
+                                        print(posicionesACambiar,letraAGuardar[0])
+                                        posicionesACambiar.remove(eli)
+                                        print("BAsta")
+                                        del letraAGuardar[0]
+                                        print("no?")
+                                        est = est+1
+                                        break
+                                    elif tuanis[e] in self.markers :
+                                        print("Es marcador")
+                                        self.hileraPorLetras[posicionesACambiar[eli]] = tuanis[e] #posicionesACambiar[]=[2,1];posicionesACambiar[0]=2
+                                        del posicionesACambiar[eli]
+                                        print("Hilera despues de marcador: ",self.hileraPorLetras)
+                                        #bande = 1
+                                        est = est+1
+                                        break
+                    #print("sdsadasdsa")
+                            #sirbve para xB->B, siempre markers del otro lado
+#                            if len(posicionesACambiar) > len(self.reglasAfterArrow): # si hay mas posiciones que letras
+#                                print("if")							          #xB->x	  xxB->Bx
+#                                diferencia = len(posicionesACambiar) - len(self.reglasAfterArrow) #2 - 1 = 1; 3  - 2 = 1; ELIMINAR LA DIFERENCIA
+#                                print("tamPosicioneCambiar: ",len(posicionesACambiar),"TamReglasAfterAfrr",len(self.reglasAfterArrow))
+#                                difParaFor = len(posicionesACambiar) - diferencia
+#                                print("Cant a Guardar en hilera: ",difParaFor)			
+#                                for eli in range(0 , difParaFor): #0 hasta 0
+#                                    print("Psicion a cambiar: ", eli)
+#                                    for e in range(est, len(tuanis)):
+#                                        print("Posicion a cambiar: ",posicionesACambiar[eli])
+#                                        self.hileraPorLetras[posicionesACambiar[eli]] = tuanis[e] #posicionesACambiar[]=[2,1];posicionesACambiar[0]=2
+#                                        print("sin eliminar: ",self.hileraPorLetras)
+#                                        del posicionesACambiar[eli]
+#                                        #bande = 1
+#                                        print("despues del remove")
+#                                        est = est+1
+#                                        break
+#                                			
+#                                for limpia in range(0 , len(posicionesACambiar)):#borra las posiciones que sobran
+#                                    print("Limpia pos en hilera: ", posicionesACambiar[limpia] )
+#                                    if limpia > 0:
+#                                        del self.hileraPorLetras[posicionesACambiar[limpia-1]]
+#                                    else:
+#                                        del self.hileraPorLetras[posicionesACambiar[limpia]]
+#                                print("Listo?: ",self.hileraPorLetras)
 								
 							#break se sale de un for y queda en el anterior
                             #==============================================================================================
-                            
+                            #if len(posicionesACambiar)  len(self.reglasAfterArrow):
                             #Descomentar, desde aqui
 #                            for s in range(0, len(posicionesACambiar)): #2 posiciones para cambiar soloo una letra
 #                                for e in range(est, len(tuanis)):
@@ -816,18 +869,11 @@ class Ui_MainWindow(object):
 #                                    del self.hileraPorLetras[posicionesACambiar[s]]
                             #Hasta aqui  
                             
-                                print("FORANTSW")  
-                            print("Sigue en for")  
+                                
                             #self.hileraPorLetras[posicionesACambiar[0]] = tuanis[r] # si es un marker = Beta,Alpha...
                     #print("Antes:",self.hileraPorLetras,"Pos: ",self.hileraPorLetras[pos])
                     #self.hileraPorLetras[pos] = datosARemplazar
-                    print("Despues:",self.hileraPorLetras)          
-                            
-                        
-                    #remplazo
-                    #break
-                #print(separaRegla, "Guardo: ",reglasUso)    
-            
+                        print("Despues:",self.hileraPorLetras)          
             print(letraAGuardar," reglasQueUsa:",self.reglasQueUsa)
         #-------------------LO DEL REMPLAZO ESTA EN PSEUDOCODIGO, TENGO QUE PASARLO A PYTHON-----------------
                 #HACER REMPLAZO AQUI

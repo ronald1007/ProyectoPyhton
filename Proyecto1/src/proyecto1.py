@@ -655,7 +655,7 @@ class Ui_MainWindow(object):
                                 for s in range(0 , len(self.markers)):           #total de markers, ejm: BG
                                     if verificaAA[varRegl] == self.markers[s]:   #recorre todas las markers y verifica si esta ahi
                                         banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+5
-                                    reglasBuenasAA = reglasBuenasAA+1
+                                        reglasBuenasAA = reglasBuenasAA+1
                                     else:
                                         banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+0   
                             if len(verificaBA) == reglasBuenasBA and len(verificaAA) == reglasBuenasAA:      

@@ -688,6 +688,7 @@ class Ui_MainWindow(object):
                 separado = [word[0] for word in self.reglasBeforeArrow[i]]
                 #print("Reglas de 0 separadas",separado)
                 banderita = 0
+                
                 for x in range(0, len(self.hileraPorLetras)):
                     del reglasUso[:]
                     del letraAGuardar[:]
@@ -695,6 +696,8 @@ class Ui_MainWindow(object):
                     print(x)
                     for k in range(0, len(separado)): #[x,B] , vars wxyz->abcdefg...
                         #print(separado[k])
+                        banderita2 = 0
+                        banderita3 = 0
                         if paso == 2:
                             for nuevo in range(quedoEn+1, len(self.hileraPorLetras)): #bcd
                                 #for u in range(0, len(self.var)):   #var xyzw
@@ -711,8 +714,11 @@ class Ui_MainWindow(object):
                                                 letraAGuardar.append(self.hileraPorLetras[nuevo]) #ab
                                                 pos = nuevo
                                                 posicionesACambiar.append(nuevo)
+                                                banderita2 = 1
                                                 break
-                                        break 
+                                        if banderita2 == 1: 
+                                            break    
+                                         
                                     elif separado[k] in self.markers : #si es un marker
                                         #print("Markador? " ,separado[k],"Hilera: ",self.hileraPorLetras[nuevo])
                                         if self.hileraPorLetras[nuevo] == separado[k]: #a == a  for i sibolos, separado[i] == self.hileraPorLetras[n]
@@ -723,10 +729,13 @@ class Ui_MainWindow(object):
                                             #letraAGuardar.append(self.hileraPorLetras[nuevo]) #ab
                                             pos = nuevo
                                             posicionesACambiar.append(nuevo)
+                                            banderita2 = 1
                                             break
-                                        break
+                                        if banderita2 == 1: 
+                                            break
                         if paso == 1:   
                             for n in range(quedoEn, len(self.hileraPorLetras)): #aBc
+                                    print("n es igual = ", n , "TAM: ",len(self.hileraPorLetras))
                                 #for u in range(0, len(self.var)): #var xyzw
                                     #if separado[k] == self.var[u]:   #x == x #solo verifica que este entre las variables
                                     #print(separado[k], "Hilera0:",self.hileraPorLetras[n])
@@ -743,11 +752,13 @@ class Ui_MainWindow(object):
                                                 letraAGuardar.append(self.hileraPorLetras[n]) #ab
                                                 pos = n
                                                 posicionesACambiar.append(n)
+                                                banderita3 = 1
                                                 break
                                             #for    
-                                        break
+                                        if banderita3 == 1: 
+                                            break
                                     elif separado[k] in self.markers : #si es un marker
-                                        #print("Sirvio",self.hileraPorLetras[n])
+                                        print(self.hileraPorLetras[n],separado[k])
                                         if self.hileraPorLetras[n] == separado[k]: #a == a  for i sibolos, separado[i] == self.hileraPorLetras[n]
                                             quedoEn = n
                                             paso = 2
@@ -756,8 +767,10 @@ class Ui_MainWindow(object):
                                             #letraAGuardar.append(self.hileraPorLetras[n]) #ab
                                             pos = n
                                             posicionesACambiar.append(n)
+                                            banderita3 = 1
                                             break
-                                        break 
+                                        if banderita3 == 1: 
+                                            break 
                         print("SUUUUUP: ",reglasUso,"Regla a buscar: ",separado)
                         if reglasUso == separado:
                             print("Letrasss:",letraAGuardar,"POSSS:",posicionesACambiar)
@@ -839,6 +852,42 @@ class Ui_MainWindow(object):
                                         #bande = 1
                                         est = est+1
                                         break
+                        elif len(posicionesACambiar) < len(self.reglasAfterArrow[i]):
+                            print("Mayor")
+                            guardadas = []
+                            ultima = len(posicionesACambiar)-1
+                            for n in range (posicionesACambiar[ultima]+1, len(self.hileraPorLetras)):
+                                guardadas.append(self.hileraPorLetras[n])
+                            print("Primero")
+                            for hula in range (posicionesACambiar[0], len(self.hileraPorLetras)):
+                                del self.hileraPorLetras[posicionesACambiar[0]]
+                            print("Paso fores que acomodan")    
+                            for e in range(est, len(tuanis)):
+                                    print("evaluando: ",tuanis[e])
+                                    if tuanis[e] in self.var :
+                                        print("Es variable, posiciones: ",posicionesACambiar, " Letras: ",letraAGuardar)
+                                        self.hileraPorLetras.append(letraAGuardar[0])
+                                        #self.hileraPorLetras[eli] = letraAGuardar[0]
+                                        print("Hilera despues de Var atesdesalir: ",self.hileraPorLetras)
+                                        #self.hileraPorLetras[posicionesACambiar[eli]] = letraAGuardar[0]  #
+                                        print(posicionesACambiar,letraAGuardar[0])
+                                        #posicionesACambiar.remove(eli)
+                                        print("BAsta")
+                                        #del letraAGuardar[0]
+                                        print("no?")
+                                        est = est+1
+                                        
+                                    elif tuanis[e] in self.markers :
+                                        print("Es marcador")
+                                        self.hileraPorLetras.append(tuanis[e])
+                                        #self.hileraPorLetras[posicionesACambiar[eli]] = tuanis[e] #posicionesACambiar[]=[2,1];posicionesACambiar[0]=2
+                                        #del posicionesACambiar[eli]
+                                        print("Hilera despues de marcador: ",self.hileraPorLetras)
+                                        #bande = 1
+                                        est = est+1
+                                        
+                            for gg in range(0, len(guardadas)):
+                                self.hileraPorLetras.append(guardadas[gg])
                     #print("sdsadasdsa")
                             #sirbve para xB->B, siempre markers del otro lado
 #                            if len(posicionesACambiar) > len(self.reglasAfterArrow): # si hay mas posiciones que letras

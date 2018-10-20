@@ -352,30 +352,30 @@ class Ui_MainWindow(object):
         self.actionDebug.setText(_translate("MainWindow", "Debug"))
     
         #NUEVO----------------------------------------------------------
-        self.pushButton.setText(_translate("MainWindow", "A"))
-        self.pushButton_2.setText(_translate("MainWindow", "A"))
-        self.pushButton_3.setText(_translate("MainWindow", "A"))
-        self.pushButton_4.setText(_translate("MainWindow", "A"))
-        self.pushButton_5.setText(_translate("MainWindow", "A"))
-        self.pushButton_6.setText(_translate("MainWindow", "A"))
-        self.pushButton_7.setText(_translate("MainWindow", "A"))
-        self.pushButton_8.setText(_translate("MainWindow", "A"))
-        self.pushButton_9.setText(_translate("MainWindow", "A"))
-        self.pushButton_10.setText(_translate("MainWindow", "A"))
-        self.pushButton_11.setText(_translate("MainWindow", "A"))
-        self.pushButton_12.setText(_translate("MainWindow", "A"))
-        self.pushButton_13.setText(_translate("MainWindow", "A"))
-        self.pushButton_14.setText(_translate("MainWindow", "A"))
-        self.pushButton_15.setText(_translate("MainWindow", "A"))
-        self.pushButton_16.setText(_translate("MainWindow", "A"))
-        self.pushButton_17.setText(_translate("MainWindow", "A"))
-        self.pushButton_18.setText(_translate("MainWindow", "A"))
-        self.pushButton_19.setText(_translate("MainWindow", "A"))
-        self.pushButton_20.setText(_translate("MainWindow", "A"))
-        self.pushButton_21.setText(_translate("MainWindow", "A"))
-        self.pushButton_23.setText(_translate("MainWindow", "A"))
-        self.pushButton_24.setText(_translate("MainWindow", "A"))
-        self.pushButton_25.setText(_translate("MainWindow", "A"))
+        self.pushButton.setText(_translate("MainWindow", "\u03B1"))
+        self.pushButton_2.setText(_translate("MainWindow", "\u03B2"))
+        self.pushButton_3.setText(_translate("MainWindow", "\u03B3"))
+        self.pushButton_4.setText(_translate("MainWindow", "\u03B4"))
+        self.pushButton_5.setText(_translate("MainWindow", "\u03B5"))
+        self.pushButton_6.setText(_translate("MainWindow", "\u03B6"))
+        self.pushButton_7.setText(_translate("MainWindow", "\u03B7"))
+        self.pushButton_8.setText(_translate("MainWindow", "\u03B8"))
+        self.pushButton_9.setText(_translate("MainWindow", "\u03B9"))
+        self.pushButton_10.setText(_translate("MainWindow", "\u03BA"))
+        self.pushButton_11.setText(_translate("MainWindow", "\u03BB"))
+        self.pushButton_12.setText(_translate("MainWindow", "\u03BC"))
+        self.pushButton_13.setText(_translate("MainWindow", "\u03BD"))
+        self.pushButton_14.setText(_translate("MainWindow", "\u03BE"))
+        self.pushButton_15.setText(_translate("MainWindow", "\u03BF"))
+        self.pushButton_16.setText(_translate("MainWindow", "\u03C0"))
+        self.pushButton_17.setText(_translate("MainWindow", "\u03C1"))
+        self.pushButton_18.setText(_translate("MainWindow", "\u03C2"))
+        self.pushButton_19.setText(_translate("MainWindow", "\u03C3"))
+        self.pushButton_20.setText(_translate("MainWindow", "\u03C4"))
+        self.pushButton_21.setText(_translate("MainWindow", "\u03C5"))
+        self.pushButton_23.setText(_translate("MainWindow", "\u03C6"))
+        self.pushButton_24.setText(_translate("MainWindow", "\u03C7"))
+        self.pushButton_25.setText(_translate("MainWindow", "\u03C8"))
       
         #print(self.pushButton.text())
         #self.campoIngresa.clicked.connect(self.leerLineaPorLinea)
@@ -404,6 +404,10 @@ class Ui_MainWindow(object):
         self.pushButton_24.clicked.connect(self.imprimir23)
         self.pushButton_25.clicked.connect(self.imprimir24)
         
+        self.campoIngresa.insertPlainText("#symbols abcdefghijklmnopqrstuvwxyz0123456789"+"\n")
+        self.campoIngresa.insertPlainText("#vars wxyz"+"\n")
+        self.campoIngresa.insertPlainText("#markers "+'\u03B1'+'\u03B2'+'\u03B3'+'\u03B4'+"\n")
+         
         self.botonStart.clicked.connect(self.leerLineaPorLinea)
         self.botonDebug.clicked.connect(self.debugea)
         #-----------------------------
@@ -486,14 +490,14 @@ class Ui_MainWindow(object):
         #cadena = []
         if fileName:
             with open(fileName, 'w',encoding=encoding) as f:
-                texto = self.campoSalida.toPlainText()
+                texto = self.campoIngresa.toPlainText()
                 #cadena.append(texto)
                 #texto2 = texto.decode('utf-8', 'ignore')
                 #print(texto2)
                 #u = unicode(texto, "utf-8")
                 #print(u)
                 f.write(texto)
-                #f.write(unicode_string.encode('utf8'))
+                
                 #f.write(self.text_edit.toPlainText())
         #print(cadena)
     
@@ -628,13 +632,13 @@ class Ui_MainWindow(object):
                                 self.reglasBeforeArrow.append("INCORRECTO")
                                 self.reglasAfterArrow.append("INCORRECTO")
                             #print(self.reglasBeforeArrow)
-                        elif '?' in letras :   
+                        elif '\u2192' in letras :   
                             print("reglasSeparadasPorFlecha")
                             banderaReglasConSentido = 0
                             reglasBuenasBA = 0
                             reglasBuenasAA = 0
                             sinEspacios2 = lines[i].replace(" ", "")
-                            self.reglasSeparadasPorFlecha = (sinEspacios2).split('?')
+                            self.reglasSeparadasPorFlecha = (sinEspacios2).split('\u2192')
                             verificaBA = self.reglasSeparadasPorFlecha[0]
                             verificaAA = self.reglasSeparadasPorFlecha[1]
                             print(reglasSeparadasPorFlecha)
@@ -655,7 +659,9 @@ class Ui_MainWindow(object):
                                         banderaReglasConSentido = banderaReglasConSentido+0
                                         
                             for varRegl in range(0 , len(verificaAA)):      #verificaVarsBA = reglas antes de la flecha
-
+                                if verificaAA[varRegl] == ".":
+                                    banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+5
+                                    reglasBuenasAA = reglasBuenasAA+1
                                 for v in range(0 , len(self.var)):              #total de vars, ejm: abdcefgh
                                     if verificaAA[varRegl] == self.var[v]:      #recorre todas las vars y verifica si esta ahi
                                         banderaReglasConSentidoDespuesFlecha = banderaReglasConSentidoDespuesFlecha+5

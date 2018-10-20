@@ -219,6 +219,9 @@ class Ui_MainWindow(object):
         self.pushButton_21 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_21.setGeometry(QtCore.QRect(730, 160, 31, 23))
         self.pushButton_21.setObjectName("pushButton_21")
+        self.pushButton_22 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_22.setGeometry(QtCore.QRect(730, 220, 31, 23))
+        self.pushButton_22.setObjectName("pushButton_22")
         self.pushButton_23 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_23.setGeometry(QtCore.QRect(730, 220, 31, 23))
         self.pushButton_23.setObjectName("pushButton_23")
@@ -228,6 +231,10 @@ class Ui_MainWindow(object):
         self.pushButton_25 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_25.setGeometry(QtCore.QRect(730, 140, 31, 23))
         self.pushButton_25.setObjectName("pushButton_25")
+        
+        self.pushButton_27 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_27.setGeometry(QtCore.QRect(730, 140, 31, 23))
+        self.pushButton_27.setObjectName("pushButton_27")
         
         
         self.listView = QtWidgets.QListView(self.centralwidget)
@@ -258,6 +265,7 @@ class Ui_MainWindow(object):
         self.pushButton_23.raise_()
         self.pushButton_5.raise_()
         self.pushButton_15.raise_()
+        self.pushButton_27.raise_()
         #--------------------------------------------------
         
         
@@ -373,9 +381,12 @@ class Ui_MainWindow(object):
         self.pushButton_19.setText(_translate("MainWindow", "\u03C3"))
         self.pushButton_20.setText(_translate("MainWindow", "\u03C4"))
         self.pushButton_21.setText(_translate("MainWindow", "\u03C5"))
+        self.pushButton_22.setText(_translate("MainWindow", "\u03C5"))
         self.pushButton_23.setText(_translate("MainWindow", "\u03C6"))
         self.pushButton_24.setText(_translate("MainWindow", "\u03C7"))
         self.pushButton_25.setText(_translate("MainWindow", "\u03C8"))
+        
+        self.pushButton_27.setText(_translate("MainWindow", "\u2192"))
       
         #print(self.pushButton.text())
         #self.campoIngresa.clicked.connect(self.leerLineaPorLinea)
@@ -400,9 +411,11 @@ class Ui_MainWindow(object):
         self.pushButton_19.clicked.connect(self.imprimir19)
         self.pushButton_20.clicked.connect(self.imprimir20)
         self.pushButton_21.clicked.connect(self.imprimir21)
-        self.pushButton_23.clicked.connect(self.imprimir22)
-        self.pushButton_24.clicked.connect(self.imprimir23)
-        self.pushButton_25.clicked.connect(self.imprimir24)
+        self.pushButton_22.clicked.connect(self.imprimir22)
+        self.pushButton_23.clicked.connect(self.imprimir23)
+        self.pushButton_24.clicked.connect(self.imprimir24)
+        self.pushButton_25.clicked.connect(self.imprimir25)
+        self.pushButton_27.clicked.connect(self.imprimir27)
         
         self.campoIngresa.insertPlainText("#symbols abcdefghijklmnopqrstuvwxyz0123456789"+"\n")
         self.campoIngresa.insertPlainText("#vars wxyz"+"\n")
@@ -469,13 +482,15 @@ class Ui_MainWindow(object):
     def imprimir21(self):
         self.campoIngresa.setText(self.campoIngresa.toPlainText() + self.pushButton_21.text())
     def imprimir22(self):
-        self.campoIngresa.setText(self.campoIngresa.toPlainText() + self.pushButton_23.text())
+        self.campoIngresa.setText(self.campoIngresa.toPlainText() + self.pushButton_22.text())
     def imprimir23(self):
-        self.campoIngresa.setText(self.campoIngresa.toPlainText() + self.pushButton_24.text())
+        self.campoIngresa.setText(self.campoIngresa.toPlainText() + self.pushButton_23.text())
     def imprimir24(self):
+        self.campoIngresa.setText(self.campoIngresa.toPlainText() + self.pushButton_24.text())
+    def imprimir25(self):
         self.campoIngresa.setText(self.campoIngresa.toPlainText() + self.pushButton_25.text())
-
-
+    def imprimir27(self):
+        self.campoIngresa.setText(self.campoIngresa.toPlainText() + self.pushButton_27.text())    
         
     
     def guardarArchivoDeTexto(self):

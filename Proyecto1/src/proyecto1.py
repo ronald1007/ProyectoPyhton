@@ -940,7 +940,9 @@ class Ui_MainWindow(object):
                                      
                 print(letraAGuardar," reglasQueUsa:",self.reglasQueUsa)
                 print("Sigue probando :",sigueProbando)
-            print("Salio del while, uso: ",self.hileraPorLetras)            
+            print("Salio del while, uso: ",self.hileraPorLetras)
+            str1 = ''.join(self.hileraPorLetras)
+            self.campoSalida.setText(str1)
 
 if __name__ == "__main__":
     import sys

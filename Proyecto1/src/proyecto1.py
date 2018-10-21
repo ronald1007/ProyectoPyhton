@@ -1411,7 +1411,7 @@ class Ui_MainWindow(object):
                                             print(posicionesACambiar,letraAGuardar[0])
                                             #posicionesACambiar.remove(eli)
                                             print("BAsta")
-                                            #del letraAGuardar[0]
+                                            del letraAGuardar[0]
                                             print("no?")
                                             est = est+1
 

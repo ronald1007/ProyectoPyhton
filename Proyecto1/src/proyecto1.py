@@ -313,6 +313,8 @@ class Ui_MainWindow(object):
         self.actionAbrir.setObjectName("actionAbrir")
         self.actionGuardar = QtWidgets.QAction(MainWindow)
         self.actionGuardar.setObjectName("actionGuardar")
+        self.actionGuardarAbajo = QtWidgets.QAction(MainWindow)
+        self.actionGuardarAbajo.setObjectName("actionGuardarAbajo")
         self.actionCerrar = QtWidgets.QAction(MainWindow)
         self.actionCerrar.setObjectName("actionCerrar")
         self.actionStart = QtWidgets.QAction(MainWindow)
@@ -323,6 +325,7 @@ class Ui_MainWindow(object):
         self.actionDebug.setObjectName("actionDebug")
         self.menuAbrir_Archivo.addAction(self.actionAbrir)
         self.menuAbrir_Archivo.addAction(self.actionGuardar)
+        self.menuAbrir_Archivo.addAction(self.actionGuardarAbajo)
         self.menuAbrir_Archivo.addAction(self.actionCerrar)
         self.menuEditar.addAction(self.actionStart)
         self.menuEditar.addAction(self.actionDebug)
@@ -333,6 +336,7 @@ class Ui_MainWindow(object):
         #self.botonStart.clicked.connect(self.leerLineaPorLinea) #********************************************
         self.actionAbrir.triggered.connect(self.openFileNameDialog)
         self.actionGuardar.triggered.connect(self.guardarArchivoDeTexto)
+        self.actionGuardarAbajo.triggered.connect(self.guardarArchivoDeTextoAbajo)
         #self.actionAbrir.clicked.connect(self.openFileNameDialog) #********************************************
         
         #self.openFileNameDialog()
@@ -354,7 +358,8 @@ class Ui_MainWindow(object):
         self.menuAbrir_Archivo.setTitle(_translate("MainWindow", "Archivo"))
         self.menuEditar.setTitle(_translate("MainWindow", "Editar"))
         self.actionAbrir.setText(_translate("MainWindow", "Abrir"))
-        self.actionGuardar.setText(_translate("MainWindow", "Guardar"))
+        self.actionGuardar.setText(_translate("MainWindow", "Guardar Algoritmo"))
+        self.actionGuardarAbajo.setText(_translate("MainWindow", "Guardar Resultado"))
         self.actionCerrar.setText(_translate("MainWindow", "Cerrar"))
         self.actionStart.setText(_translate("MainWindow", "Play"))
         self.actionDebug.setText(_translate("MainWindow", "Debug"))
@@ -516,6 +521,29 @@ class Ui_MainWindow(object):
                 #f.write(self.text_edit.toPlainText())
         #print(cadena)
     
+    def guardarArchivoDeTextoAbajo(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        encoding = 'utf8'
+        fileName, _ = QFileDialog.getSaveFileName(None,"Guardar", " ","All Files (*)", options=options)
+        #fileName, _ = QFileDialog.getSaveFileName(None,"Guardar", " ","All Files (*)").decode('utf-8')
+        #if fileName:
+        #    print(fileName)
+        #print(fileName)
+        #cadena = []
+        if fileName:
+            with open(fileName, 'w',encoding=encoding) as f:
+                texto = self.campoSalida.toPlainText()
+                #cadena.append(texto)
+                #texto2 = texto.decode('utf-8', 'ignore')
+                #print(texto2)
+                #u = unicode(texto, "utf-8")
+                #print(u)
+                f.write(texto)
+                
+                #f.write(self.text_edit.toPlainText())
+        #print(cadena)
+    
     
     def openFileNameDialog(self):    
         options = QFileDialog.Options()
@@ -596,7 +624,7 @@ class Ui_MainWindow(object):
                                         #VERIFICAR SI ES UN SIMBOLO O MARKERS Y GUARDARLA EN UNA NUEVA VARIABLE "GLOBAL
 
                     else:
-                        
+                        print("letras",letras)
                         if '>' in letras :      #carga las reglas
                             banderaReglasConSentido = 0
                             reglasBuenasBA = 0
@@ -610,6 +638,7 @@ class Ui_MainWindow(object):
                                                       #1 = 1
                                 for v in range(0 , len(self.var)):              #total de vars, ejm: abdcefgh
                                     if verificaBA[varRegl] == self.var[v]:      #recorre todas las vars y verifica si esta ahi
+                                        
                                         banderaReglasConSentido = banderaReglasConSentido+5
                                         reglasBuenasBA = reglasBuenasBA+1
                                     else:
@@ -647,13 +676,13 @@ class Ui_MainWindow(object):
                                 self.reglasBeforeArrow.append("INCORRECTO")
                                 self.reglasAfterArrow.append("INCORRECTO")
                             #print(self.reglasBeforeArrow)
-                        elif '\u2192' in letras :   
+                        elif '?' in letras :   
                             print("reglasSeparadasPorFlecha")
                             banderaReglasConSentido = 0
                             reglasBuenasBA = 0
                             reglasBuenasAA = 0
                             sinEspacios2 = lines[i].replace(" ", "")
-                            self.reglasSeparadasPorFlecha = (sinEspacios2).split('\u2192')
+                            self.reglasSeparadasPorFlecha = (sinEspacios2).split('?')
                             verificaBA = self.reglasSeparadasPorFlecha[0]
                             verificaAA = self.reglasSeparadasPorFlecha[1]
                             print(reglasSeparadasPorFlecha)
@@ -970,6 +999,25 @@ class Ui_MainWindow(object):
                 print(letraAGuardar," reglasQueUsa:",self.reglasQueUsa)
                 print("Sigue probando :",sigueProbando)
             print("Salio del while, uso: ",self.hileraPorLetras)
+            ff = 0
+            empieza = 0
+            while ff < len(self.hileraPorLetras):
+                #print(ff)
+                if self.hileraPorLetras[empieza]:
+                    if self.hileraPorLetras[empieza] in self.markers :
+                        #print(self.hileraPorLetras[empieza],"->", self.hileraPorLetras)
+                        del self.hileraPorLetras[empieza]
+                empieza+=1
+                ff+=1
+#            for v in range(0, len(self.hileraPorLetras)):
+#                print("pauiso: ",self.hileraPorLetras[v],"v: ",v)
+#                if self.hileraPorLetras[v]:
+#                    if self.hileraPorLetras[v] in self.markers :
+#                        print(self.hileraPorLetras[v],"->", self.hileraPorLetras)
+#                        del self.hileraPorLetras[v]
+#                        print("BORRADO: ", self.hileraPorLetras)
+                        
+            print("TERMONOFOR:")
             str1 = ''.join(self.hileraPorLetras)
             self.campoSalida.setText(str1)
 
